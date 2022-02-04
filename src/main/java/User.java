@@ -34,4 +34,28 @@ public class User
     public String getAdress() {
         return adress;
     }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
 }

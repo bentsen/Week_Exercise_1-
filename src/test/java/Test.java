@@ -5,13 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Test
 {
 
-    private UserLogic userMap;
+    private UserLogic userMap = new UserLogic();
 
     @org.junit.jupiter.api.BeforeEach
     void setUp()
@@ -59,16 +60,22 @@ public class Test
     @org.junit.jupiter.api.Test
     void Test()
     {
-        UserLogic userLogic = new UserLogic();
-
-        assertEquals("Hans",userLogic.printAllUsersFistNames());
+        assertEquals("Hans",userMap.printAllUsersFistNames());
     }
 
     @org.junit.jupiter.api.Test
     void Test2()
     {
-        UserLogic userLogic = new UserLogic();
 
-        assertEquals("Rolighedsvej 3 40404040",userLogic.getUserDetails("Hans"));
+
+        assertEquals("Rolighedsvej 3 40404040",userMap.getUserByName("Hans"));
+    }
+
+    @org.junit.jupiter.api.Test
+    void test3()
+    {
+        ArrayList<User> users =  userMap.getAllUsers();
+        users.get(0).setFirstName("Peter");
+        assertEquals(new ArrayList<>(Arrays.asList(userMap.getAllUsers())),users);
     }
 }
