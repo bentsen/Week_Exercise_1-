@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-        private static String URL = "jdbc:mysql://localhost:3306/startcode_test?serverTimezone=Europe/Copenhagen";
-        private static String USER = "dev";
-        private static String PW = "ax2";
+        private static String URL = "jdbc:mysql://64.225.108.4:3306/startcode_test?serverTimezone=Europe/Copenhagen";
+        private static String USER = "root";
+        private static String PW = "Mikkel405!";
 
         private static Connection singleton;
 
