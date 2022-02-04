@@ -1,9 +1,7 @@
 import DBConnector.Database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.xml.crypto.Data;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UserLogic
@@ -53,15 +51,32 @@ public class UserLogic
 
     public User getUserByName(String name)
     {
-        ArrayList<User> userList = getAllUsers();
-        StringBuilder details = new StringBuilder();
+            User tmpUser = null;
+            try
+            {
+                Connection connection = Database.connection();
+                String sql = " SELECT * FROM usertable WHERE fname='"+name+"'";
+                try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                    ResultSet rs = ps.executeQuery(sql);
+                    if (rs.next())
+                    {
+                        String firstName = rs.getString("fname");
+                        String lastName = rs.getString("lname");
+                        String password = rs.getString("pw");
+                        String phoneNumber = rs.getString("phone");
+                        String address = rs.getString("address");
 
-       User usertmp = userList.stream()
-                .filter(e -> name.equals(e.getFirstName()))
-                .findFirst()
-                .get();
+                        tmpUser = new User(firstName,lastName,password,phoneNumber,address);
+                    }
 
-        return usertmp;
+                } catch (SQLIntegrityConstraintViolationException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return tmpUser;
     }
 
     public void editUserDetails(User user)
@@ -69,7 +84,7 @@ public class UserLogic
         try
         {
             Connection connection = Database.connection();
-            String sql = "UPDATE user SET fname=?, lname=?, pw=?, phone=?, address=?";
+            String sql = "UPDATE usertable SET fname=?, lname=?, pw=?, phone=?, address=?";
             try(PreparedStatement ps = connection.prepareStatement(sql))
             {
                 ps.setString(1, user.getFirstName());
@@ -79,6 +94,7 @@ public class UserLogic
                 ps.setString(5, user.getAdress());
                 ps.executeUpdate();
             }
+
         }
         catch (SQLException | ClassNotFoundException e)
         {

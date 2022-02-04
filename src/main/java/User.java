@@ -7,8 +7,6 @@ public class User
     private String phoneNumber;
     private String adress;
 
-    private UserLogic userMap = new UserLogic();
-
     public User(String firstName, String lastName, String password, String phoneNumber, String adress)
     {
         this.firstName = firstName;

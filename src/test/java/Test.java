@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Test
@@ -66,16 +67,21 @@ public class Test
     @org.junit.jupiter.api.Test
     void Test2()
     {
+        User actual = new User("Hans","Hansen","Hemmelig123","40404040",
+                "Rolighedsvej 3");
+        User expected = userMap.getUserByName("Hans");
 
-
-        assertEquals("Rolighedsvej 3 40404040",userMap.getUserByName("Hans"));
+        assertEquals(actual.equals(expected),expected.equals(actual));
     }
 
     @org.junit.jupiter.api.Test
     void test3()
     {
-        ArrayList<User> users =  userMap.getAllUsers();
-        users.get(0).setFirstName("Peter");
-        assertEquals(new ArrayList<>(Arrays.asList(userMap.getAllUsers())),users);
+        ArrayList<User> actual =  userMap.getAllUsers();
+        actual.get(0).setFirstName("Peter");
+        userMap.editUserDetails(actual.get(0));
+        ArrayList<User> expected = userMap.getAllUsers();
+
+        assertEquals(expected.toArray().equals(actual.toArray()),actual.toArray().equals(expected.toArray()));
     }
 }
